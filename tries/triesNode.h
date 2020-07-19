@@ -1,15 +1,19 @@
-#ifndef _TRIENODE_H_
-#define _TRIENODE_H_
+#ifndef _TRIESNODE_H_
+#define _TRIESNODE_H_
+#include <iostream>
 
 class TrieNode {
     public:
     char data;
+    TrieNode **children;
     bool isTerminal;
-    TrieNode** children;
 
     TrieNode(char data) {
         this -> data = data;
         children = new TrieNode*[26];
+        for (int i = 0; i < 26; i++) {
+            children[i] = NULL;
+        }
         isTerminal = false;
     }
 };
