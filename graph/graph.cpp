@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 using namespace std;
 
 // Printing the graph using depth first search
@@ -17,6 +18,37 @@ void print(int** edges, int n, int sv, bool* visited) {
             print(edges, n, i, visited);
         }
     }
+}
+
+//Printing the graph using breadth first search
+void bsf_print(int** edges, int n, int sv, bool* visited) {
+    queue<int> vertices;
+    vertices.push(sv);
+    visited[sv] = true;
+
+    while(vertices.size() != 0) {
+        cout << vertices.front() << " ";
+        for (int i = 0; i < n; i++) {
+            if (visited[i]) {
+                continue;
+            }
+
+            if (edges[vertices.front()][i] == 1) {
+                vertices.push(i);
+                visited[i] = true;
+            }
+        }
+
+        vertices.pop();
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (visited[i] == false) {
+            bsf_print(edges, n, i, visited);
+            break;
+        }
+    }
+
 }
 
 int main() {
@@ -51,6 +83,12 @@ int main() {
     }
 
     print(edges, n, 0, visited);
+
+    for (int i = 0; i < n; i++) {
+        visited[i] = false;
+    }
+
+    bsf_print(edges, n, 0, visited);
 
     delete [] visited;
 
